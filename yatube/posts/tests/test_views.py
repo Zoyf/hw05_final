@@ -148,7 +148,7 @@ class PostPagesTests(TestCase):
                 response = self.authorized_client.get(value)
                 form_field = response.context["page_obj"]
                 self.assertNotIn(expected, form_field)
-    
+
     def test_comment_correct_context(self):
         """Валидная форма Комментария создает запись в Post."""
         comments_count = Comment.objects.count()
@@ -159,10 +159,13 @@ class PostPagesTests(TestCase):
             follow=True,
         )
         self.assertRedirects(
-            response, reverse("posts:post_detail", kwargs={"post_id": self.post.id})
+            response,
+            reverse("posts:post_detail", kwargs={"post_id": self.post.id})
         )
         self.assertEqual(Comment.objects.count(), comments_count + 1)
-        self.assertTrue(Comment.objects.filter(text="Тестовый коммент").exists())
+        self.assertTrue(
+            Comment.objects.filter(text="Тестовый коммент").exists()
+        )
 
     def test_check_cache(self):
         """Проверка кеша."""
@@ -274,7 +277,10 @@ class TaskPagesTests(TestCase):
             name="small.gif", content=cls.small_gif, content_type="image/gif"
         )
         cls.post = Post.objects.create(
-            author=cls.user, text="Тестовый текст", group=cls.group, image=cls.uploaded
+            author=cls.user,
+            text="Тестовый текст",
+            group=cls.group,
+            image=cls.uploaded
         )
 
     @classmethod
@@ -316,5 +322,8 @@ class TaskPagesTests(TestCase):
     def test_image_in_page(self):
         """Проверяем что пост с картинкой создается в БД"""
         self.assertTrue(
-            Post.objects.filter(text="Тестовый текст", image="posts/small.gif").exists()
+            Post.objects.filter(
+                text="Тестовый текст",
+                image="posts/small.gif"
+            ).exists()
         )
