@@ -193,7 +193,7 @@ class PostPagesTests(TestCase):
         r_2 = self.authorized_client.get(reverse("posts:follow_index"))
         self.assertNotIn(self.post, r_2.context["page_obj"])
 
-    def test_follow_author(self):    
+    def test_follow_author(self):
         """Проверка отписки от автора поста"""
         Follow.objects.all().delete()
         response = self.authorized_client.get(reverse("posts:follow_index"))
