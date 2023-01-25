@@ -11,17 +11,9 @@ class PostForm(ModelForm):
             'text': Textarea(attrs={'class': 'form-control'}),
             'group': Select(attrs={'class': 'form-control'}),
         }
-        labels = {
-            'text': 'Текст поста',
-            'group': 'Группа',
-        }
-        help_text = {
-            'text': 'Текст нового поста',
-            'group': 'Группа, к которой бедет относиться пост',
-        }
 
 
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ("text",)
+        fields = ('text',)

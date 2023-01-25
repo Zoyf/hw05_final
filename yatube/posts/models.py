@@ -57,21 +57,21 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post, blank=True, null=True,
         on_delete=models.SET_NULL,
-        related_name="comments"
+        related_name='comments'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="comments"
+        related_name='comments'
     )
     text = models.TextField(
-        "Текст комментария",
-        help_text="Введите текст комментария"
+        'Текст комментария',
+        help_text='Введите текст комментария'
     )
-    created = models.DateTimeField("Дата публикации", auto_now_add=True)
+    created = models.DateTimeField('Дата публикации', auto_now_add=True)
 
     class Meta:
-        ordering = ["-created"]
+        ordering = ['-created']
 
     def __str__(self):
         return self.text
@@ -81,10 +81,18 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="follower"
+        related_name='follower'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following"
+        related_name='following'
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('user', 'author',),
+                name='unique_follow'
+            ),
+        ]
